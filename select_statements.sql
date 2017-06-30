@@ -22,3 +22,4 @@ select * from user_sequences
 where sequence_name in ('MEMBER_ID_SEQ', 'TITLE_ID_SEQ', 'TITLE_COPY_ID_SEQ',
     'RENTAL_ID_SEQ', 'RESERVATION_ID_SEQ');
 
+select * from title_avail;

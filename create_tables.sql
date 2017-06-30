@@ -54,3 +54,10 @@ create sequence title_id_seq nocache;
 create sequence title_copy_id_seq nocache;
 create sequence rental_id_seq nocache;
 create sequence reservation_id_seq nocache;
+
+CREATE VIEW title_avail as
+SELECT t.title, c.copy_id, c.status, r.exp_return_date
+FROM title t, title_copy c, rental r
+WHERE t.title_id = c.title_id
+and c.copy_id = r.copy_id(+);
+
