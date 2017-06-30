@@ -115,15 +115,35 @@ INSERT INTO Rental(rental_id, member_id, copy_id, book_date,
 exp_return_date, act_return_date)
 VALUES(rental_id_seq.NEXTVAL, 6, 9, sysdate - 4, sysdate - 2, sysdate - 2);
 
+INSERT INTO title(title_id , title, description, rating,
+category, release_date)
+VALUES (title_id_seq.NEXTVAL, 'Interstellar War', 'Historical Interstellar action movie.',
+'PG', 'SCIFI', TO_DATE( '07-JUL-1977','DD-MON-YYYY'));
 
+INSERT INTO Title_Copy(copy_id, title_id, status)
+VALUES(Title_Copy_id_seq.NEXTVAL,
+  (select title_id from title where title = 'Interstellar War'),
+'AVAILABLE');
 
+UPDATE Title set title = 'Interstellar Wars'
+where title = 'Interstellar War';
 
+INSERT INTO Title_Copy(copy_id, title_id, status)
+VALUES(Title_Copy_id_seq.NEXTVAL, 7, 'AVAILABLE');
 
+INSERT INTO Reservation(reservation_id, res_date, member_id, title_id)
+VALUES (reservation_id_seq.NEXTVAL, SYSDATE,
+  (select member_id from member where first_name = 'Carmen'
+    and last_name = 'Velasquez'),
+  (select title_id from title where title = 'Interstellar Wars')
+);
 
-
-
-
-
+INSERT INTO Reservation(reservation_id, res_date, member_id, title_id)
+VALUES (reservation_id_seq.NEXTVAL, SYSDATE,
+  (select member_id from member where first_name = 'Mark'
+    and lower(last_name) = 'quick-tosee'),
+  (select title_id from title where title = 'Soda Gang')
+);
 
 
 
