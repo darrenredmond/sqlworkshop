@@ -1,4 +1,61 @@
+-- Example 1
+-- explicit cursor definition - declare, open, fetch, close cursor
+SET SERVEROUTPUT ON
+DECLARE
+    CURSOR emp_cursor is
+        select employee_id, last_name from employees
+        where department_id = 30;
+    empno employees.employee_id%type;
+    lname employees.last_name%type;
+BEGIN
+    OPEN emp_cursor;
+    LOOP
+        FETCH emp_cursor into empno, lname;
+        exit when emp_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(empno || ' ' || lname);
+    END LOOP;
+    CLOSE emp_cursor;
+END;
+/
 
+-- Example 2
+-- explicit cursor definition - declare, open, fetch, close cursor
+-- using rowtype
+SET SERVEROUTPUT ON
+DECLARE
+    CURSOR emp_cursor is
+        select employee_id, last_name from employees
+        where department_id = 30;
+    emp_record emp_cursor%rowtype;
+BEGIN
+    OPEN emp_cursor;
+    LOOP
+        FETCH emp_cursor into emp_record;
+        exit when emp_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(emp_record.employee_id || ' ' || emp_record.last_name);
+    END LOOP;
+    CLOSE emp_cursor;
+END;
+/
+
+-- Example 3
+-- explicit cursor definition - declare, but uses cursor for loop
+-- so no need to open, fetch, close cursor
+SET SERVEROUTPUT ON
+DECLARE
+    CURSOR emp_cursor is
+        select employee_id, last_name from employees
+        where department_id = 30;
+BEGIN
+    FOR emp_record in emp_cursor
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(emp_record.employee_id || ' ' || emp_record.last_name);
+    END LOOP;
+END;
+/
+
+-- Example 4
+-- cursor for loop with no declaration - define the sql in the cursor for loop.
 SET SERVEROUTPUT ON
 BEGIN
     FOR emp_record in (select employee_id, last_name
@@ -10,6 +67,7 @@ BEGIN
 END;
 /
 
+-- Example 5 - parameterised cursor
 SET SERVEROUTPUT ON
 DECLARE
     CURSOR emp_cursor(deptno NUMBER) is
@@ -37,6 +95,8 @@ BEGIN
 END;
 /
 
+-- Example 6 - cursor with for update and second update statement using
+-- where current of.
 SET SERVEROUTPUT ON
 DECLARE
   CURSOR sal_cursor is
@@ -56,6 +116,7 @@ BEGIN
 end;
 /
 
+-- Check Salary Function
 CREATE OR REPLACE FUNCTION check_sal 
 RETURN Boolean
 IS
@@ -80,6 +141,7 @@ EXCEPTION
 end;
 /
 
+-- anonymous block to call the check sal function.
 set serveroutput on
 begin
   if (check_sal is null) then
