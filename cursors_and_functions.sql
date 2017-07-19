@@ -303,6 +303,8 @@ execute add_employee('Darren', 'Redmond', 'dredmond', p_job_id => 'AD_PRES');
 
 EXECUTE package_variables.set('Hi Darren');
 
+describe package_variables;
+
 SET SERVEROUTPUT ON
 BEGIN
     DBMS_OUTPUT.PUT_LINE(package_variables.get);
@@ -321,4 +323,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('20 miles = ' || 20*global_consts.mile_2_kilo || ' kms');
 END;
 /
+
+describe global_consts;
+
 
