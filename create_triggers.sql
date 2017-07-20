@@ -92,8 +92,8 @@ END town_crier;
 
 create table a_table1 (col1 number);
 
-CREATE VIEW EMPLOYEE_DEPARTMENT
-AS SELECT e.last_name, e.first_name, d.department_name
+CREATE OR REPLACE VIEW EMPLOYEE_DEPARTMENT
+AS SELECT d.department_id, d.department_name, e.first_name, e.last_name
 from employees e, departments d
 where e.department_id = d.department_id;
 
@@ -101,6 +101,28 @@ SELECT * from employee_department;
 
 update employee_department set department_name = 'Shipping';
 
+CREATE OR REPLACE TRIGGER insert_emp_dept
+  INSTEAD OF INSERT ON EMPLOYEE_DEPARTMENT
+DECLARE
+  v_department_id departments.department_id%TYPE;
+BEGIN
+  BEGIN
+    SELECT department_id INTO v_department_id
+    FROM   departments
+    WHERE  department_id = :new.department_id;
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      INSERT INTO departments (department_id, department_name)
+             VALUES (departments_seq.nextval, :new.department_name)
+             RETURNING department_id INTO v_department_id;
+  END;
+  INSERT INTO employees (employee_id, first_name, last_name, department_id,
+                 email, hire_date, salary)
+         VALUES(employees_seq.nextval, :new.first_name,
+                 :new.last_name, v_department_id,
+                 :new.first_name || :new.last_name, SYSDATE, 10);
+END insert_emp_dept;
+/
 select * from user_errors;
 
-
+select * from employee_department;
