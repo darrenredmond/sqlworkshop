@@ -117,12 +117,16 @@ BEGIN
              RETURNING department_id INTO v_department_id;
   END;
   INSERT INTO employees (employee_id, first_name, last_name, department_id,
-                 email, hire_date, salary)
+                 email, hire_date, salary, job_id)
          VALUES(employees_seq.nextval, :new.first_name,
                  :new.last_name, v_department_id,
-                 :new.first_name || :new.last_name, SYSDATE, 10);
+                 :new.first_name || :new.last_name, SYSDATE, 10, 'AD_VP');
 END insert_emp_dept;
 /
+insert into employee_department(department_id, department_name, first_name, last_name)
+values(null, 'Analytics', 'Mark', 'Redmond');
+
 select * from user_errors;
 
 select * from employee_department;
+
