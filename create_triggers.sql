@@ -123,10 +123,11 @@ BEGIN
                  :new.first_name || :new.last_name, SYSDATE, 10, 'AD_VP');
 END insert_emp_dept;
 /
+drop trigger insert_emp_dept;
 insert into employee_department(department_id, department_name, first_name, last_name)
 values(null, 'Analytics', 'Mark', 'Redmond');
 
 select * from user_errors;
 
-select * from employee_department;
-
+select * from employee_department where department_name = 'Analytics';
+select * from employees where first_name = 'Mark';
