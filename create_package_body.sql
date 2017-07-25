@@ -26,5 +26,19 @@ CREATE OR REPLACE PACKAGE BODY package_movies IS
       p_join_date);
     DBMS_OUTPUT.PUT_LINE('Inserted ' || SQL%ROWCOUNT || ' member row.');
   END add_member;
+
+  PROCEDURE add_member(
+    p_first_name member.first_name%TYPE,
+    p_last_name member.last_name%TYPE,
+    p_address member.address%TYPE,
+    p_city member.city%TYPE,
+    p_phone member.phone%TYPE,
+    p_join_date VARCHAR2)
+  IS
+  BEGIN
+    add_member(p_first_name, p_last_name, p_address, p_city, p_phone,
+      TO_DATE(p_join_date, 'DD-MON-YYYY'));
+  END add_member;
+
 END package_movies;
 /

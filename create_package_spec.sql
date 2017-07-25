@@ -16,5 +16,13 @@ IS
     p_phone member.phone%TYPE,
     p_join_date member.join_date%TYPE);
 
+  PROCEDURE add_member(
+    p_first_name member.first_name%TYPE,
+    p_last_name member.last_name%TYPE,
+    p_address member.address%TYPE,
+    p_city member.city%TYPE,
+    p_phone member.phone%TYPE,
+    p_join_date VARCHAR2);
+
 END package_movies;
 /
