@@ -13,6 +13,7 @@ set autocommit on
 @create_package_spec.sql
 @create_package_body.sql
 @create_procedures.sql
+@create_movie_triggers.sql
 @insert_data.sql
 @select_statements.sql
 
