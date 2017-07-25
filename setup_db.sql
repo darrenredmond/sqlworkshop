@@ -11,6 +11,7 @@ set autocommit on
 @drop_tables.sql
 @create_tables.sql
 @create_package_spec.sql
+@create_package_body.sql
 @create_procedures.sql
 @insert_data.sql
 @select_statements.sql
