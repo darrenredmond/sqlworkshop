@@ -104,8 +104,10 @@ VALUES (reservation_id_seq.NEXTVAL, SYSDATE,
   (select title_id from title where title = 'Soda Gang')
 );
 
+-- the irish movie rater decided that Star Wars was an over 18's
+execute package_movies.update_rating('Star Wars', 'NC17');
 
-
+describe title;
 
 
 

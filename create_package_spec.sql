@@ -8,6 +8,10 @@ IS
     p_category title.category%TYPE,
     p_release_date title.release_date%TYPE);
 
+  PROCEDURE update_rating(
+    p_title title.title%TYPE,
+    p_rating title.rating%TYPE);
+
   PROCEDURE add_member(
     p_first_name member.first_name%TYPE,
     p_last_name member.last_name%TYPE,

@@ -12,6 +12,23 @@ CREATE OR REPLACE PACKAGE BODY package_movies IS
     DBMS_OUTPUT.PUT_LINE('Inserted ' || SQL%ROWCOUNT || ' title row.');
   END add_title;
 
+  PROCEDURE update_rating(
+    p_title title.title%TYPE,
+    p_rating title.rating%TYPE)
+  IS
+  CURSOR title_cursor is
+    select title_id, rating
+    from title
+    where title = p_title
+    for update of rating nowait;
+  BEGIN
+    for title_record in title_cursor
+    loop
+      update title set rating = p_rating
+      where current of title_cursor;
+    end loop;
+  END update_rating;
+
   PROCEDURE add_member(
     p_first_name member.first_name%TYPE,
     p_last_name member.last_name%TYPE,
@@ -42,3 +59,5 @@ CREATE OR REPLACE PACKAGE BODY package_movies IS
 
 END package_movies;
 /
+
+select * from user_errors;
