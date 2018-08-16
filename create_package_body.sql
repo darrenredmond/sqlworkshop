@@ -57,7 +57,37 @@ CREATE OR REPLACE PACKAGE BODY package_movies IS
       TO_DATE(p_join_date, 'DD-MON-YYYY'));
   END add_member;
 
+  FUNCTION check_member(p_first_name member.first_name%TYPE,
+      p_last_name member.last_name%TYPE) 
+  RETURN member.member_id%TYPE
+  IS
+    v_member_id member.member_id%TYPE;
+  BEGIN
+    select member_id into v_member_id from member
+        where last_name = p_last_name and first_name = p_first_name;
+    return v_member_id;
+  EXCEPTION
+    when no_data_found then
+      return 0;
+    when too_many_rows then
+      return 0;
+  END check_member;
+
+  FUNCTION get_member(p_first_name member.first_name%TYPE,
+      p_last_name member.last_name%TYPE) 
+  RETURN member%ROWTYPE
+  IS
+    v_member member%ROWTYPE;
+  BEGIN
+    select * into v_member from member
+        where last_name = p_last_name and first_name = p_first_name;
+    return v_member;
+  EXCEPTION
+    when no_data_found then
+      return NULL;
+    when too_many_rows then
+      return NULL;
+  END get_member;
+
 END package_movies;
 /
-
-select * from user_errors;

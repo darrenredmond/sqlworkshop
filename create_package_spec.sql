@@ -28,5 +28,14 @@ IS
     p_phone member.phone%TYPE,
     p_join_date VARCHAR2);
 
+  FUNCTION check_member(
+    p_first_name member.first_name%TYPE,
+    p_last_name member.last_name%TYPE) 
+  RETURN member.member_id%TYPE;
+
+  FUNCTION get_member(p_first_name member.first_name%TYPE,
+      p_last_name member.last_name%TYPE) 
+  RETURN member%ROWTYPE;
+
 END package_movies;
 /
