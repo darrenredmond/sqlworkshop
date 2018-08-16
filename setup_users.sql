@@ -1,0 +1,18 @@
+create user movieadmin identified by movieadmin;
+create user movieguest identified by movieguest;
+create role moviemanager;
+create role movienormal;
+grant connect, create session, create table, create view to moviemanager;
+grant connect, create session to movienormal;
+grant moviemanager to movieadmin;
+grant movienormal to movieguest;
+grant select on title to movienormal;
+grant select on title_copy to movienormal;
+grant select on member to movienormal;
+grant select on rental to movienormal;
+grant select on reservation to movienormal;
+grant all privileges on title to moviemanager;
+grant all privileges on title_copy to moviemanager;
+grant all privileges on member to moviemanager;
+grant all privileges on rental to moviemanager;
+grant all privileges on reservation to moviemanager;
